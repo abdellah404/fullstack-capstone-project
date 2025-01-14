@@ -6,6 +6,7 @@ import './App.css';
 import Navbar from './components/Navbar/Navbar';
 import RagisterPage from './components/RegisterPage/RegisterPage';
 import LoginPage from './components/LoginPage/LoginPage';
+import DetailsPage from './components/DetailsPage/DetailsPage';
 
 
 function App() {
@@ -19,7 +20,7 @@ function App() {
           <Route path="/app" element={<MainPage />} />
           <Route path="/app/register" element={<RagisterPage/>} />
           <Route path='/app/login' element={<LoginPage/>} />
-        </Routes>
+          <Route path="/app/product/:productId" element={<DetailsPage/>} />        </Routes>
         </>
   );
 }
