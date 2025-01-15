@@ -1,13 +1,54 @@
 import React, { useState,useEffect } from 'react';
+import {useAppContext} from '../../context/AuthContext';
+import { useNavigate } from 'react-router-dom';
+import { urlConfig } from '../../config';
+
 
 import './LoginPage.css';
 
 function LoginPage() {
+    const [ incorrect, setIncorrect] = useState("");  
+    const navigate = useNavigate();
+    const bearerToken = sessionStorage.getItem('auth-token');
+    const { setIsLoggedIn } = useAppContext();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-
+    if(bearerToken ){
+        navigate('/app');
+    }
     const handleLogin = async (e) => {
-        e.preventDefault();
+       
+        const response = await fetch(`${urlConfig.backendUrl}/api/auth/login`, {
+            method: 'POST', 
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                email: email,
+                password: password,
+            }),
+        });
+        const json = await response.json();
+        if (json.authtoken) {
+            sessionStorage.setItem('auth-token', json.authtoken);
+            sessionStorage.setItem('name', json.firstName);
+            sessionStorage.setItem('email', json.email);
+            setIsLoggedIn(true);
+            navigate('/app');
+        } else {
+            document.getElementById("email").value="";
+            document.getElementById("password").value="";
+            setIncorrect("Wrong email or password. Try again.");
+        //Below is optional, but recommended - Clear out error message after 2 seconds
+            setTimeout(() => {
+              setIncorrect("");
+            }, 2000);
+          }
+
+        
+
+
+
 }
 
 
@@ -38,6 +79,7 @@ function LoginPage() {
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
                             />
+                           <span style={{color:'red',height:'.5cm',display:'block',fontStyle:'italic',fontSize:'12px'}}>{incorrect}</span>
                         </div>
                         {/* Include appropriate error message if login is incorrect*/}
                         <button className="btn btn-primary w-100 mb-3" onClick={handleLogin}>Login</button>
