@@ -76,7 +76,7 @@ function SearchPage() {
                   Category
                 </label>
                 <select id="categorySelect" className="form-select">
-                    <option value="">All</option>
+                  <option value="">All</option>
                   {categories.map((category) => (
                     <option key={category}>{category}</option>
                   ))}
@@ -87,7 +87,7 @@ function SearchPage() {
                   Condition
                 </label>
                 <select id="conditionSelect" className="form-select">
-                <option value="">All</option>
+                  <option value="">All</option>
                   {conditions.map((condition) => (
                     <option key={condition}>{condition}</option>
                   ))}
@@ -111,8 +111,7 @@ function SearchPage() {
             </div>
           </div>
 
-        
-        {/* Task 7: Add text input field for search criteria*/}
+          {/* Task 7: Add text input field for search criteria*/}
           <input
             type="text"
             className="mb-3 form-control"
@@ -121,9 +120,9 @@ function SearchPage() {
             onChange={(e) => setSearchQuery(e.target.value)}
           />
           {/* Task 8: Implement search button with onClick event to trigger search:*/}
-            <button className="btn btn-primary" onClick={handleSearch}>
-                Search
-            </button>
+          <button className="btn btn-primary" onClick={handleSearch}>
+            Search
+          </button>
 
           {/* Task 5: Display search results and handle empty results with a message. */}
           <div className="search-results mt-4">
@@ -158,8 +157,6 @@ function SearchPage() {
               </div>
             )}
           </div>
-
-          
         </div>
       </div>
     </div>
